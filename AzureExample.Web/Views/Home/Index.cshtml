@@ -1,0 +1,7 @@
+﻿@model Order
+
+<form asp-action="Order" method="post">
+    <label for="NumberOfCones">Number of cones:</label>
+    <input asp-for="NumberOfCones" type="number" min="1">
+    <button type="submit">Order</button>
+</form>
