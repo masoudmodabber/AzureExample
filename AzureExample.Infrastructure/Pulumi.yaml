@@ -1,0 +1,7 @@
+name: AzureExample.Infrastructure
+runtime: dotnet
+description: a minimal azure native program that creates the necessary resources that is needed to creaate a queue name order-queue
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""

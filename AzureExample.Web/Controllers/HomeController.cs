@@ -1,22 +1,21 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AzureExample.Web.Models;
 using Azure.Messaging.ServiceBus;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-
+using Microsoft.Extensions.Options;
+using AzureExample.Configuration;
 namespace AzureExample.Web.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ServiceBusSender _serviceBusSender;
     private readonly ILogger<HomeController> _logger;
+    private readonly string? _orderQueue;
 
-    public HomeController(ILogger<HomeController> logger, ServiceBusClient serviceBusClient, IConfiguration configuration)
+    public HomeController(ILogger<HomeController> logger, ServiceBusClient serviceBusClient, IOptions<AzureSettings> azureSettings)
     {
         _logger = logger;
-        string queueName = configuration.GetSection("AzureSettings:QueueName").Value;
-        _serviceBusSender = serviceBusClient.CreateSender(queueName);
+        _orderQueue = azureSettings.Value.OrderQueue;
+        _serviceBusSender = serviceBusClient.CreateSender(_orderQueue);
     }
 
     public IActionResult Index()
