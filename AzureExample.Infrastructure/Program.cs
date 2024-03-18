@@ -7,6 +7,11 @@ using AzureExample.Configuration;
 
 return await Pulumi.Deployment.RunAsync(() =>
 {
+    if (PulumiSettings.Env == Deployment.Instance.StackName)
+    {
+        throw new Exception("Environment name does not match stack name");
+    }
+    
     var namePrefix = PulumiSettings.NamePrefix;
 
     // Create an Azure Resource Group
